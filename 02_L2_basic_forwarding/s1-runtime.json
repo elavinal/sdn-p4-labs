@@ -5,34 +5,22 @@
     "table_entries": [
       {
         "table": "MyIngress.dmac",
-        "match": {
-          "hdr.ethernet.dstAddr": ["08:00:00:00:01:11"]
-        },
+        "match": { "hdr.ethernet.dstAddr": "08:00:00:00:01:11" },
         "action_name": "MyIngress.forward",
-        "action_params": {
-          "egress_port": 1
-        }
+        "action_params": { "egress_port": 1 }
       },
       {
         "table": "MyIngress.dmac",
-        "match": {
-          "hdr.ethernet.dstAddr": ["08:00:00:00:02:22"]
-        },
+        "match": { "hdr.ethernet.dstAddr": "08:00:00:00:02:22" },
         "action_name": "MyIngress.forward",
-        "action_params": {
-          "egress_port": 2
-        }
+        "action_params": { "egress_port": 2 }
       },
       {
         "table": "MyIngress.dmac",
-        "match": {
-          "hdr.ethernet.dstAddr": ["08:00:00:00:03:33"]
-        },
+        "match": { "hdr.ethernet.dstAddr": "08:00:00:00:03:33" },
         "action_name": "MyIngress.forward",
-        "action_params": {
-          "egress_port": 3
-        }
+        "action_params": { "egress_port": 3 }
       }
     ]
-  }
+}
   
