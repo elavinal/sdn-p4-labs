@@ -22,6 +22,7 @@
 
 # Edit E. Lavinal, Université de Toulouse (France)
 # Print Thrift port and CPU port when configuring P4RuntimeSwitch
+# Add log level and priority-queues arguments
 
 import argparse
 import json
@@ -159,7 +160,7 @@ class ExerciseRunner:
 
 
     def __init__(self, topo_file, log_dir, log_level, pcap_dir,
-                       switch_json, bmv2_exe='simple_switch', quiet=False):
+                       switch_json, bmv2_exe='simple_switch', quiet=False, priority_queues=None):
         """ Initializes some attributes and reads the topology json. Does not
             actually run the exercise. Use run_exercise() for that.
 
@@ -193,6 +194,7 @@ class ExerciseRunner:
         self.bmv2_exe = bmv2_exe
         # EDIT EL
         self.log_level = log_level
+        self.priority_queues = priority_queues
 
 
     def run_exercise(self):
@@ -259,7 +261,9 @@ class ExerciseRunner:
                                 json_path=self.switch_json,
                                 log_console=True,
                                 log_level=self.log_level, # EDIT EL
-                                pcap_dump=self.pcap_dir)
+                                pcap_dump=self.pcap_dir,
+                                priority_queues=self.priority_queues  # EDIT EL
+                                )
 
         self.topo = ExerciseTopo(self.hosts, self.switches, self.links, self.log_dir, self.bmv2_exe, self.pcap_dir)
 
@@ -385,6 +389,9 @@ def get_args():
     parser.add_argument('-j', '--switch_json', type=str, required=False)
     parser.add_argument('-b', '--behavioral-exe', help='Path to behavioral executable',
                                 type=str, required=False, default='simple_switch')
+    # EDIT EL -- add priority-queues arg for simple_switch
+    parser.add_argument('-PQ', '--priority-queues', type=int, required=False,
+                        help='Number of priority queues')
     return parser.parse_args()
 
 
@@ -394,7 +401,8 @@ if __name__ == '__main__':
 
     args = get_args()
     exercise = ExerciseRunner(args.topo, args.log_dir, args.log_level, args.pcap_dir,
-                              args.switch_json, args.behavioral_exe, args.quiet)
+                              args.switch_json, args.behavioral_exe, args.quiet,
+                              args.priority_queues)
 
     exercise.run_exercise()
 

@@ -34,6 +34,11 @@ ifdef LOG_LEVEL
 run_args += -L $(LOG_LEVEL)
 endif
 
+# Define priority queues
+ifdef PRIO_QUEUES
+run_args += -PQ $(PRIO_QUEUES)
+endif
+
 all: run
 
 run: build

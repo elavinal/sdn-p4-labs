@@ -15,7 +15,7 @@
 #
 
 # Edit E. Lavinal, Université de Toulouse (France)
-# Add CPU PORT when starting P4RuntimeSwitch
+# Add CPU PORT, log level and priority-queues when starting P4RuntimeSwitch
 
 import os
 import tempfile
@@ -45,6 +45,7 @@ class P4RuntimeSwitch(P4Switch):
                  enable_debugger = False,
                  log_file = None,
                  log_level = 'debug',
+                 priority_queues = None,
                  **kwargs):
         Switch.__init__(self, name, **kwargs)
         assert (sw_path)
@@ -98,6 +99,8 @@ class P4RuntimeSwitch(P4Switch):
         self.nanomsg = "ipc:///tmp/bm-{}-log.ipc".format(self.device_id)
         # EDIT EL - set cpu port
         self.cpu_port = P4RuntimeSwitch.sw_cpu_port
+        # EDIT EL - set number of priority-queues (default None)
+        self.priority_queues = priority_queues
 
 
     def check_switch_started(self, pid):
@@ -137,6 +140,9 @@ class P4RuntimeSwitch(P4Switch):
         # EDIT EL - cpu port
         if self.cpu_port:
             args.append("--cpu-port " + str(self.cpu_port))
+        # EDIT EL - multi-queueing
+        if self.priority_queues:
+            args.append("--priority-queues " + str(self.priority_queues))
         cmd = ' '.join(args)
         info(cmd + "\n")
 
