@@ -21,7 +21,7 @@
 #
 
 # Edit E. Lavinal, Université de Toulouse (France)
-# Print Thrift port and CPU port when configuring P4RuntimeSwitch
+# Print Thrift port when configuring P4RuntimeSwitch
 # Add log level and priority-queues arguments
 
 import argparse
@@ -55,7 +55,7 @@ def configureP4Switch(**switch_args):
                 print("%s -> gRPC port: %d" % (self.name, self.grpc_port))
                 # EDIT EL
                 print("%s -> Thrift port: %d" % (self.name, self.thrift_port))
-                print("%s -> CPU port: %d" % (self.name, self.cpu_port))
+                # print("%s -> CPU port: %d" % (self.name, self.cpu_port))
 
         return ConfiguredP4RuntimeSwitch
     else:
